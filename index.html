@@ -13,22 +13,25 @@
       const certusTankSize = 32000;
       const root = document.getElementById("root");
       const booody = document.getElementsByTagName("body");
-      //booody[0].style.backgroundColor = "#202124";
 
       let oolol = document.createElement("div");
-      let bbbutoms = document.createElement("div");
+
+      const clrButton = document.createElement("button");
+      clrButton.innerText = "Clear all";
+      clrButton.style.height = "3rem";
+      clrButton.style.fontSize = "1.5rem";
+      clrButton.style.width = "121px";
+      clrButton.addEventListener("click", (e) => {
+         clearResults();
+      });
 
       root.appendChild(oolol);
-      root.appendChild(bbbutoms);
+      root.appendChild(clrButton);
 
-      root.style.display = "flex";
       root.style.fontSize = "1.5rem";
-      root.style.flexDirection = "row";
 
       oolol.style.display = "flex";
-      bbbutoms.style.display = "flex";
       oolol.style.flexDirection = "row";
-      bbbutoms.style.flexDirection = "row";
       const recipes = [];
 
       class Recipe {
@@ -39,6 +42,14 @@
             this.amount = 0;
             this.initedNext = false;
             this.initElement();
+         }
+
+         kekFocus() {
+            this.inputElement.focus();
+         }
+
+         clear() {
+            this.documentElement.remove();
          }
 
          setAmount(amount) {
@@ -85,6 +96,7 @@
 
       if (recipes.length === 0) {
          recipes.push(new Recipe());
+         recipes[0].kekFocus();
       }
 
       function cheBla() {
@@ -116,6 +128,15 @@
             }
          }
          return true;
+      }
+
+      function clearResults() {
+         for (let i = 0; i < recipes.length; ++i) {
+            recipes[i].clear();
+         }
+         recipes.length = 0;
+         recipes.push(new Recipe());
+         recipes[0].kekFocus();
       }
    </script>
 </html>
