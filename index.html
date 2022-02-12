@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>GTNH Certus Calc</title>
+   </head>
+   <body>
+      <div id="root"></div>
+   </body>
+   <script>
+      const certusTankSize = 32;
+      const root = document.getElementById("root");
+      const booody = document.getElementsByTagName("body");
+      //booody[0].style.backgroundColor = "#202124";
+
+      let oolol = document.createElement("div");
+      let bbbutoms = document.createElement("div");
+
+      root.appendChild(oolol);
+      root.appendChild(bbbutoms);
+
+      root.style.display = "flex";
+      root.style.fontSize = "1.5rem";
+      root.style.flexDirection = "row";
+
+      oolol.style.display = "flex";
+      bbbutoms.style.display = "flex";
+      oolol.style.flexDirection = "row";
+      bbbutoms.style.flexDirection = "row";
+      const recipes = [];
+
+      class Recipe {
+         constructor() {
+            this.documentElement = document.createElement("div");
+            this.inputElement = document.createElement("input");
+            this.outputElement = document.createElement("div");
+            this.amount = 0;
+            this.initedNext = false;
+            this.initElement();
+         }
+
+         setAmount(amount) {
+            this.amount = parseInt(amount);
+         }
+
+         getAmount() {
+            return this.amount;
+         }
+
+         initElement() {
+            this.documentElement.style.border = "2px solid black";
+            this.documentElement.style.padding = "5px";
+            this.documentElement.style.marginRight = "2px";
+
+            this.inputElement.setAttribute("type", "number");
+            this.inputElement.style.fontSize = "1.5rem";
+            this.inputElement.style.width = "100px";
+            this.documentElement.style.backgroundColor = "gray";
+
+            this.outputElement.innerHTML = "Tanks:";
+
+            this.inputElement.addEventListener("input", (e) => {
+               this.setAmount(this.inputElement.value);
+               if (!this.initedNext) {
+                  this.documentElement.style.backgroundColor = "white";
+                  this.initedNext = true;
+                  recipes.push(new Recipe());
+               }
+               cheBla();
+            });
+
+            this.documentElement.appendChild(this.inputElement);
+            this.documentElement.appendChild(this.outputElement);
+            oolol.appendChild(this.documentElement);
+         }
+      }
+
+      if (recipes.length === 0) {
+         recipes.push(new Recipe());
+      }
+
+      function cheBla() {
+         let lel = findBestAmount(recipes);
+         for (let i = 0; i < recipes.length; ++i) {
+            if (lel < 0) {
+               recipes[i].outputElement.innerHTML = `incorrect value`;
+            } else {
+               recipes[i].outputElement.innerHTML = `Tanks: ${
+                  (lel * recipes[i].getAmount()) / certusTankSize
+               }`;
+            }
+         }
+      }
+
+      function findBestAmount(arr) {
+         for (let i = 1; i < 10000; i++) {
+            if (isItGoodNumber(arr, i)) {
+               return i;
+            }
+         }
+         return -1;
+      }
+
+      function isItGoodNumber(arr, num) {
+         for (let x = 0; x < arr.length; ++x) {
+            if ((arr[x].getAmount() * num) % certusTankSize > 0) {
+               return false;
+            }
+         }
+         return true;
+      }
+   </script>
+</html>
