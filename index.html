@@ -95,7 +95,6 @@
             });
             this.inputElement.addEventListener("keypress", (e) => {
                if ((e.code == "Enter" || e.code == "Space") && this.index < recipes.length - 1) {
-                  console.log("Kwak " + this.index);
                   recipes[this.index + 1].kekFocus();
                }
             });
@@ -113,7 +112,6 @@
 
       function cheBla() {
          let lel = findBestAmount(recipes);
-         console.log(lel);
          for (let i = 0; i < recipes.length; ++i) {
             if (lel < 0) {
                recipes[i].outputElement.innerHTML = `bad value`;
