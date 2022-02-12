@@ -10,7 +10,7 @@
       <div id="root"></div>
    </body>
    <script>
-      const certusTankSize = 32;
+      const certusTankSize = 32000;
       const root = document.getElementById("root");
       const booody = document.getElementsByTagName("body");
       //booody[0].style.backgroundColor = "#202124";
@@ -42,7 +42,13 @@
          }
 
          setAmount(amount) {
-            this.amount = parseInt(amount);
+            let res = parseInt(amount);
+            if (res < 0 || isNaN(res)) {
+               this.inputElement.value = "";
+               res = 0;
+            }
+            this.inputElement.value = res;
+            this.amount = res;
          }
 
          getAmount() {
@@ -85,7 +91,7 @@
          let lel = findBestAmount(recipes);
          for (let i = 0; i < recipes.length; ++i) {
             if (lel < 0) {
-               recipes[i].outputElement.innerHTML = `incorrect value`;
+               recipes[i].outputElement.innerHTML = `bad value`;
             } else {
                recipes[i].outputElement.innerHTML = `Tanks: ${
                   (lel * recipes[i].getAmount()) / certusTankSize
@@ -95,7 +101,7 @@
       }
 
       function findBestAmount(arr) {
-         for (let i = 1; i < 10000; i++) {
+         for (let i = 1; i < 100000; i++) {
             if (isItGoodNumber(arr, i)) {
                return i;
             }
