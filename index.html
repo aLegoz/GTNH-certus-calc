@@ -40,12 +40,13 @@
       const recipes = [];
 
       class Recipe {
-         constructor() {
+         constructor(index) {
             this.documentElement = document.createElement("div");
             this.inputElement = document.createElement("input");
             this.outputElement = document.createElement("div");
             this.amount = 0;
             this.initedNext = false;
+            this.index = index;
             this.initElement();
          }
 
@@ -88,9 +89,15 @@
                if (!this.initedNext) {
                   this.documentElement.style.backgroundColor = "white";
                   this.initedNext = true;
-                  recipes.push(new Recipe());
+                  recipes.push(new Recipe(recipes.length));
                }
                cheBla();
+            });
+            this.inputElement.addEventListener("keypress", (e) => {
+               if ((e.code == "Enter" || e.code == "Space") && this.index < recipes.length - 1) {
+                  console.log("Kwak " + this.index);
+                  recipes[this.index + 1].kekFocus();
+               }
             });
 
             this.documentElement.appendChild(this.inputElement);
@@ -100,12 +107,13 @@
       }
 
       if (recipes.length === 0) {
-         recipes.push(new Recipe());
+         recipes.push(new Recipe(recipes.length));
          recipes[0].kekFocus();
       }
 
       function cheBla() {
          let lel = findBestAmount(recipes);
+         console.log(lel);
          for (let i = 0; i < recipes.length; ++i) {
             if (lel < 0) {
                recipes[i].outputElement.innerHTML = `bad value`;
@@ -128,7 +136,7 @@
 
       function isItGoodNumber(arr, num) {
          for (let x = 0; x < arr.length; ++x) {
-            if ((arr[x].getAmount() * num) % certusTankSize > 0) {
+            if ((arr[x].getAmount() * num) % certusTankSize !== 0) {
                return false;
             }
          }
@@ -140,7 +148,7 @@
             recipes[i].clear();
          }
          recipes.length = 0;
-         recipes.push(new Recipe());
+         recipes.push(new Recipe(recipes.length));
          recipes[0].kekFocus();
       }
    </script>
